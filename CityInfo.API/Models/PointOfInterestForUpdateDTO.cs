@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityInfo.API.Models
 {
-    public class PointOfInterestFoeUpdateDTO
+    public class PointOfInterestForUpdateDTO
     {
         [Required(ErrorMessage = "You need to provide a name value")]
         [MaxLength(50)]
