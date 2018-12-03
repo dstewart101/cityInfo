@@ -36,6 +36,8 @@ namespace CityInfo.API
         {
             loggerFactory.AddConsole();
 
+            loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
