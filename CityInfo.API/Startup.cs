@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CityInfo.API.Entities;
 using CityInfo.API.Interfaces;
 using CityInfo.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -40,6 +42,8 @@ namespace CityInfo.API
             //        castedResolver.NamingStrategy = null;
             //    }
             //});
+
+            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 #if DEBUG
             services.AddTransient<IMailService, LocalMailService>();
