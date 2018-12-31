@@ -1,4 +1,5 @@
-﻿using CityInfo.API.Data;
+﻿using AutoMapper;
+using CityInfo.API.Data;
 using CityInfo.API.Interfaces;
 using CityInfo.API.Models;
 using CityInfo.API.Services;
@@ -41,16 +42,7 @@ namespace CityInfo.API.Controllers
                 }
 
                 var pointsOfInterestForCity = _cityInfoRepository.GetPointsOfInterest(cityId);
-                var pointsOfInterestForCityResults = new List<PointOfInterestDTO>();
-                foreach (var poi in pointsOfInterestForCity)
-                {
-                    pointsOfInterestForCityResults.Add(new PointOfInterestDTO()
-                    {
-                        Id = poi.Id,
-                        Name = poi.Name,
-                        Description = poi.Description
-                    });
-                }
+                var pointsOfInterestForCityResults = Mapper.Map<IEnumerable<PointOfInterestDTO>>(pointsOfInterestForCity);
 
                 return Ok(pointsOfInterestForCityResults);
             }
@@ -64,7 +56,6 @@ namespace CityInfo.API.Controllers
 
         [HttpGet("{cityId}/pointsOfInterest/{id}", Name = "GetPointOfInterest")]
         public IActionResult GetPointOfInterest(int cityId, int id) {
-            //var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
 
             if (!_cityInfoRepository.CityExists(cityId))
             {
@@ -78,12 +69,7 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            var pointOfInterestResult = new PointOfInterestDTO()
-            {
-                Id = pointOfInterest.Id,
-                Name = pointOfInterest.Name,
-                Description = pointOfInterest.Description
-            };
+            var pointOfInterestResult = Mapper.Map<IEnumerable<PointOfInterestDTO>>(pointOfInterest);
 
             return Ok(pointOfInterestResult);
         }
@@ -127,7 +113,6 @@ namespace CityInfo.API.Controllers
             city.PointsOfInterest.Add(PointOfInterest);
 
             return CreatedAtRoute("GetPointOfInterest", new { cityId = cityId, id = PointOfInterest.Id } , PointOfInterest); 
-            // return NamedRoute(cityId, PointOfInterestId, and the point of interest in the body)
         }
 
         [HttpPut("{cityId}/pointsofinterest/{id}")]
