@@ -41,5 +41,10 @@ namespace CityInfo.API.Services
         {
             return _context.PointsOfInterest.Where(c => c.CityId == cityId).ToList();
         }
+
+        public bool CityExists(int cityId)
+        {
+            return _context.Cities.Any(c => c.Id == cityId);
+        }
     }
 }
